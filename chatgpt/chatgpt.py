@@ -180,8 +180,6 @@ class Conversation:
     DEFAULT_CONFIG_PATH = "./config.json"
 
     _access_token: str = None
-    _conversation_id: str = None
-    _parent_message_id: str = None
     _email: str = None
     _password: str = None
     _model_name: str = DEFAULT_MODEL_NAME
@@ -203,8 +201,8 @@ class Conversation:
         access_token: str = None,
         email: str = None,
         password: str = None,
-        conversation_id: str = None,
-        parent_message_id: str = None,
+        conversation_id: Optional[str] = None,
+        parent_message_id: Optional[str] = None,
         timeout:int = None
     ):
         """
@@ -232,11 +230,8 @@ class Conversation:
         if password is not None:
             self._password = password
 
-        if self._conversation_id is None:
-            self._conversation_id = conversation_id
-
-        if self._parent_message_id is None:
-            self._parent_message_id = parent_message_id
+        self._conversation_id = conversation_id
+        self._parent_message_id = parent_message_id
 
         self._session = HTTPSession(timeout=timeout)
         self._openai_authentication = OpenAIAuthentication(self._session)
@@ -398,7 +393,6 @@ class Conversation:
             exception_message, exception_code)
 
     def reset(self):
-        self._message_id = None
         self._parent_message_id = None
         self._conversation_id = None
         self.write_config(self._config_path)
