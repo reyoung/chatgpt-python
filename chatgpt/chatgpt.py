@@ -10,7 +10,9 @@ from uuid import uuid4 as uuid
 from urllib.error import HTTPError
 from .errors import ChatgptError, ChatgptErrorCodes
 from tls_client.sessions import TLSClientExeption
+import logging
 
+logger = logging.getLogger(__name__)
 
 class HTTPSession:
     DEFAULT_TIMEOUT = 120
@@ -254,6 +256,7 @@ class Conversation:
         self._email = email
         self._password = password
         session_info = self._openai_authentication.login(email, password)
+        logger.info(session_info)
         if session_info is not None:
             self._access_token = session_info["accessToken"]
         return session_info
