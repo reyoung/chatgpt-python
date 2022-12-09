@@ -253,6 +253,7 @@ class Conversation:
             email (str): Email to login into openai chatgpt
             password (str): Password to login into openai chatgpt
         """
+        logger.info("login")
         self._email = email
         self._password = password
         session_info = self._openai_authentication.login(email, password)
