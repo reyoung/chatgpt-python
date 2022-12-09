@@ -215,6 +215,8 @@ class Conversation:
             parent_message_id (str, optional): Parent id with which the conversation starts. Defaults to None.
             timout (int, optional): Timeout duration in seconds.
         """
+        self._conversation_id = conversation_id
+        self._parent_message_id = parent_message_id
 
         if config_path is not None:
             self.load_config(config_path)
@@ -229,9 +231,6 @@ class Conversation:
 
         if password is not None:
             self._password = password
-
-        self._conversation_id = conversation_id
-        self._parent_message_id = parent_message_id
 
         self._session = HTTPSession(timeout=timeout)
         self._openai_authentication = OpenAIAuthentication(self._session)
